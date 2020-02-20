@@ -1,28 +1,30 @@
 import time
 import csv
-from bs4 import BeautifulSoup as bs
+from bs4 import BeautifulSoup
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 
-#initial setup
+#Chrome driver
 driver = webdriver.Chrome(
     "/Users/benediktkuehn/Documents/Development/Python/chromedriver")
 
-#login to WhatsApp web
+#Login to WhatsApp web
 driver.get("https://web.whatsapp.com/")
 
-#scan QR code from phone
-time.sleep(20)
+#Scan QR-code with your phone
+time.sleep(15)
 
-print("The wait ist over!")
-
-"""elem = driver.find_element_by_tag_name("_10V4p _1jxtm")"""
+print("The wait ist over! I hope you have logged in and selected a chat.")
 
 no_of_pagedowns = 3
-
 while no_of_pagedowns:
-            driver.find_element_by_css_selector('div.copyable-area > div').send_keys(Keys.CONTROL + Keys.HOME)
-            time.sleep(2)
-            no_of_pagedowns -= 1
+    driver.find_element_by_css_selector('div.copyable-area > div').send_keys(Keys.CONTROL + Keys.HOME)
+    time.sleep(2)
+    no_of_pagedowns -= 1
+
+html = BeautifulSoup(driver.page_source, 'html.parser')
+timeline = html.select('div.message-out')
+
+print(timeline)
