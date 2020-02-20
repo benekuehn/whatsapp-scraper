@@ -1,5 +1,6 @@
 import time
 import csv
+import re
 from bs4 import BeautifulSoup
 
 from selenium import webdriver
@@ -8,7 +9,7 @@ from selenium.webdriver.common.keys import Keys
 
 #Chrome driver
 driver = webdriver.Chrome(
-    "/Users/*/Documents/Development/Python/chromedriver")
+    "/Users/Benediktkuehn/Documents/Development/Python/chromedriver")
 
 #Login to WhatsApp web
 driver.get("https://web.whatsapp.com/")
@@ -29,7 +30,17 @@ sentMessages = html.select('div.message-out')
 
 #print(sentMessages)
 
+messageTXT = []
+
 for message in sentMessages:
     text = message.select('span.selectable-text')
-    cleantext = BeautifulSoup(str(text), "html.parser").text
+    rawtext = BeautifulSoup(str(text), "html.parser").text
+    #print(rawtext)
+    cleantext = rawtext.replace("[", "")
+    cleantext = cleantext.replace("]", "")
     print(cleantext)
+    messageTXT.append(cleantext)
+
+with open("Sentences.txt","w") as f: 
+    for message in messageTXT:
+        f.write("%s\n" % message)
