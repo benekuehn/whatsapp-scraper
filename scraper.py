@@ -8,7 +8,7 @@ from selenium.webdriver.common.keys import Keys
 
 #Chrome driver
 driver = webdriver.Chrome(
-    "/Users/benediktkuehn/Documents/Development/Python/chromedriver")
+    "/Users/*/Documents/Development/Python/chromedriver")
 
 #Login to WhatsApp web
 driver.get("https://web.whatsapp.com/")
@@ -25,6 +25,11 @@ while no_of_pagedowns:
     no_of_pagedowns -= 1
 
 html = BeautifulSoup(driver.page_source, 'html.parser')
-timeline = html.select('div.message-out')
+sentMessages = html.select('div.message-out')
 
-print(timeline)
+#print(sentMessages)
+
+for message in sentMessages:
+    text = message.select('span.selectable-text')
+    cleantext = BeautifulSoup(str(text), "html.parser").text
+    print(cleantext)
