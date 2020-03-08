@@ -19,7 +19,7 @@ time.sleep(15)
 
 print("The wait ist over! I hope you have logged in and selected a chat.")
 
-no_of_pagedowns = 3
+no_of_pagedowns = 800
 while no_of_pagedowns:
     driver.find_element_by_css_selector('div.copyable-area > div').send_keys(Keys.CONTROL + Keys.HOME)
     time.sleep(2)
